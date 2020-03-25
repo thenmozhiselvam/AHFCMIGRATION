@@ -1,4 +1,4 @@
-﻿using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -118,10 +118,18 @@ namespace GenerateInputFile
                 foreach (var obj in items)
                 {
                     Dictionary<string, object> keyValuePairs = obj.FieldValues;
+                    if (items.Count == 3)
+                    {
+                        Dictionary<string, object> keyValuePairsParenName = items[2].FieldValues;
+                        Name = keyValuePairsParenName.ContainsKey(SPOConstants.Name) ? (keyValuePairsParenName[SPOConstants.Name] != null ? keyValuePairsParenName[SPOConstants.Name].ToString() : "") : "";
+                    }
+                    else
+                        Name = keyValuePairs.ContainsKey(SPOConstants.Name) ? (keyValuePairs[SPOConstants.Name] != null ? keyValuePairs[SPOConstants.Name].ToString() : "") : "";
+                   
 
                     //title = keyValuePairs.ContainsKey(SPOConstants.Title) ? (keyValuePairs[SPOConstants.Title] != null ? keyValuePairs[SPOConstants.Title].ToString() : "") : "";
                     ListId = keyValuePairs.ContainsKey(SPOConstants.Id) ? (keyValuePairs[SPOConstants.Id] != null ? keyValuePairs[SPOConstants.Id].ToString() : "") : "";
-                    Name = keyValuePairs.ContainsKey(SPOConstants.Name) ? (keyValuePairs[SPOConstants.Name] != null ? keyValuePairs[SPOConstants.Name].ToString() : "") : "";
+                    
                     guid = keyValuePairs.ContainsKey(SPOConstants.UniqueId) ? (keyValuePairs[SPOConstants.UniqueId] != null ? keyValuePairs[SPOConstants.UniqueId].ToString() : "") : "";
                     Version = keyValuePairs.ContainsKey(SPOConstants.UIVersionString) ? (keyValuePairs[SPOConstants.UIVersionString] != null ? keyValuePairs[SPOConstants.UIVersionString].ToString() : "") : "";
 
